@@ -9,8 +9,6 @@ const Main = () => {
   const [url, setUrl] = useState(
     "https://gateway.marvel.com:443/v1/public/characters?limit=30&ts=1&apikey=a972fb1c42f56020625d88f70bd403f5&hash=ac01de495062c916cc7137c12360b6cb"
   );
-  const [searchInput, setSearchInput] = useState("");
-
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
@@ -23,11 +21,30 @@ const Main = () => {
     fetchCharacters();
   }, [url]);
 
-  function searchMarvelCharacters() {
-    setUrl(
-      `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${searchInput}&ts=1&apikey=a972fb1c42f56020625d88f70bd403f5&hash=ac01de495062c916cc7137c12360b6cb`
-    );
+  function debounce(cb, delay = 250) {
+    let timeout;
+
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        cb(...args);
+      }, delay);
+    };
   }
+
+  function searchMarvelCharacters(searchInput) {
+    if (!searchInput) {
+      setUrl(
+        "https://gateway.marvel.com:443/v1/public/characters?limit=30&ts=1&apikey=a972fb1c42f56020625d88f70bd403f5&hash=ac01de495062c916cc7137c12360b6cb"
+      );
+    } else {
+      setUrl(
+        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${searchInput}&ts=1&apikey=a972fb1c42f56020625d88f70bd403f5&hash=ac01de495062c916cc7137c12360b6cb`
+      );
+    }
+  }
+
+  const debouncedSearch = debounce(searchMarvelCharacters, 400);
 
   return (
     <>
@@ -38,9 +55,7 @@ const Main = () => {
             type="search"
             placeholder="Search Here"
             className="search"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            onKeyPress={searchMarvelCharacters}
+            onChange={(e) => debouncedSearch(e.target.value)}
           />
         </div>
       </div>
@@ -48,7 +63,9 @@ const Main = () => {
         {!characters.length ? (
           <p>Not Found</p>
         ) : (
-          characters.map((character) => <Card character={character}></Card>)
+          characters.map((character) => (
+            <Card key={character.id} character={character}></Card>
+          ))
         )}
       </div>
     </>
