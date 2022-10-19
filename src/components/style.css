@@ -3,7 +3,7 @@
   margin: 0;
 }
 body {
-  background-color: #0b0a08;
+  background-color: #fff;
 }
 .header {
   padding: 2rem 0;
@@ -16,17 +16,19 @@ body {
   flex-wrap: wrap;
   gap: 2rem;
 }
+.search-bar img {
+  width: 5rem;
+}
 .header .search {
   outline: none;
   background: none;
-  border: none;
   width: 350px;
   height: 35px;
   border-radius: 1rem;
-  color: white;
+  color: #0b0a08;
   font-size: 20px;
   padding: 1.2rem;
-  border: 2px solid #b41f23;
+  border: 2px solid #0b0a08;
 }
 .content {
   width: 80%;
@@ -36,20 +38,26 @@ body {
   grid-gap: 1rem;
 }
 .card {
-  background-color: #b41f23;
+  background-color: #0b0a08;
   color: white;
   position: relative;
   margin-top: 3rem;
-  padding: 1.5px;
+  /* padding: 1.5px; */
 }
 p {
-  color: white;
+  color: #0b0a08;
   text-align: center;
   font-size: 25px;
 }
-.card img {
+.card-img {
+  overflow: hidden;
   width: 100%;
   height: 75%;
+  transition: 0.5s;
+}
+.card-img img {
+  width: 100%;
+  height: 100%;
   transition: 0.5s;
 }
 .card:hover img {
@@ -64,20 +72,21 @@ p {
 .card::before {
   content: "";
   position: absolute;
-  background: #b41f23;
   z-index: -1;
 }
 .card::before {
   bottom: -2em;
   left: 0;
-  width: 75%;
+  width: 100%;
   height: 3em;
+  background: #0b0a08;
 }
 .card::after {
-  bottom: -2em;
-  right: 0.9em;
-  width: 41%;
-  height: 5em;
-  transform: rotate(-38deg);
+  bottom: -3em;
+  right: -1em;
+  width: 2rem;
+  height: 2rem;
+  transform: rotate(-45deg);
   box-sizing: 1rem;
+  background: #fff;
 }

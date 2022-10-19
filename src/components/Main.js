@@ -50,7 +50,7 @@ const Main = () => {
     <>
       <div className="header">
         <div className="search-bar">
-          <img src="./images/logo.jpg" alt="logo" />
+          <img src="./images/logo.png" alt="logo" />
           <input
             type="search"
             placeholder="Search Here"
